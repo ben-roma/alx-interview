@@ -1,15 +1,45 @@
 #!/usr/bin/python3
-import random
+"""
+Reads stdin line by line and computes metrics.
+"""
 import sys
-from time import sleep
-import datetime
+import signal
 
-for i in range(10000):
-    sleep(random.random())
-    sys.stdout.write("{:d}.{:d}.{:d}.{:d} - [{}] \"GET /projects/260 HTTP/1.1\" {} {}\n".format(
-        random.randint(1, 255), random.randint(1, 255), random.randint(1, 255), random.randint(1, 255),
-        datetime.datetime.now(),
-        random.choice([200, 301, 400, 401, 403, 404, 405, 500]),
-        random.randint(1, 1024)
-    ))
-    sys.stdout.flush()
+file_size = 0
+status_codes = {}
+line_count = 0
+
+
+def print_stats():
+    """Prints the accumulated statistics."""
+    print(f"File size: {file_size}")
+    for status in sorted(status_codes.keys()):
+        print(f"{status}: {status_codes[status]}")
+
+
+def signal_handler(sig, frame):
+    """Handles the SIGINT signal (Ctrl+C)."""
+    print_stats()
+    sys.exit(0)
+
+
+signal.signal(signal.SIGINT, signal_handler)
+
+try:
+    for line in sys.stdin:
+        try:
+            parts = line.split()
+            status_code = int(parts[-2])
+            file_size += int(parts[-1])
+            status_codes[status_code] = status_codes.get(status_code, 0) + 1
+        except (IndexError, ValueError):
+            pass  # Skip lines with invalid format
+
+        line_count += 1
+        if line_count % 10 == 0:
+            print_stats()
+
+except KeyboardInterrupt:
+    print_stats()
+
+print_stats()
