@@ -1,18 +1,18 @@
 #!/usr/bin/python3
 """
-Module to calculate the perimeter of an island in a grid.
+Module pour calculer le périmètre d'une île dans une grille.
 """
 
 
 def island_perimeter(grid):
     """
-    Returns the perimeter of the island described in grid.
+    Retourne le périmètre de l'île décrite dans la grille.
 
     Args:
-        grid (list of list of int): The grid representing the island.
+        grid (liste de listes d'int): La grille représentant l'île.
 
     Returns:
-        int: The perimeter of the island.
+        int: Le périmètre de l'île.
     """
     if not grid or not grid[0]:
         return 0
@@ -24,16 +24,16 @@ def island_perimeter(grid):
     for i in range(rows):
         for j in range(cols):
             if grid[i][j] == 1:
-                # Start with 4 sides for each land cell
+                # Commence avec 4 côtés pour chaque cellule de terre
                 perimeter += 4
 
-                # Check if the cell above is land
+                # Vérifie si la cellule au-dessus est de la terre
                 if i > 0 and grid[i - 1][j] == 1:
-                    # Subtract 2 for the shared side with the upper cell
+                    # Soustrait 2 pour le côté partagé avec la cellule du dessus
                     perimeter -= 2
-                # Check if the cell to the left is land
+                # Vérifie si la cellule à gauche est de la terre
                 if j > 0 and grid[i][j - 1] == 1:
-                    # Subtract 2 for the shared side with the left cell
+                    # Soustrait 2 pour le côté partagé avec la cellule de gauche
                     perimeter -= 2
 
     return perimeter
