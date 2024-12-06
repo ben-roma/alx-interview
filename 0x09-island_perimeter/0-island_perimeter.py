@@ -29,11 +29,11 @@ def island_perimeter(grid):
 
                 # Vérifie si la cellule au-dessus est de la terre
                 if i > 0 and grid[i - 1][j] == 1:
-                    # Soustrait 2 pour le côté partagé avec la cellule du dessus
+                    # Soustrait 2 pour le côté partagé avec la cellule
                     perimeter -= 2
                 # Vérifie si la cellule à gauche est de la terre
                 if j > 0 and grid[i][j - 1] == 1:
-                    # Soustrait 2 pour le côté partagé avec la cellule de gauche
+                    # Soustrait 2 pour le côté partagé avec la cellule
                     perimeter -= 2
 
     return perimeter
