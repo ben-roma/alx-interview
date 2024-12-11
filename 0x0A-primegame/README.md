@@ -102,4 +102,3 @@ Winner: Ben
 - **Prime Numbers**: [Introduction to Prime Numbers](https://en.wikipedia.org/wiki/Prime_number)
 - **Sieve of Eratosthenes**: [Algorithm Explanation](https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes)
 - **Game Theory**: [Basic Concepts](https://en.wikipedia.org/wiki/Game_theory)
-
