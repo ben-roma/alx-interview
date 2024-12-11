@@ -1,57 +1,50 @@
 #!/usr/bin/python3
 
-def sieve_of_eratosthenes(max_n):
-    """Generates a boolean array indicating prime numbers up to max_n"""
-    primes = [True] * (max_n + 1)
-    primes[0] = primes[1] = False
-
-    for i in range(2, int(max_n**0.5) + 1):
-        if primes[i]:
-            for multiple in range(i * i, max_n + 1, i):
-                primes[multiple] = False
-
-    return primes
-
-def calculate_prime_counts(max_n, primes):
-    """Precomputes the number of primes up to each number from 0 to max_n"""
-    prime_counts = [0] * (max_n + 1)
-    count = 0
-
-    for i in range(max_n + 1):
-        if primes[i]:
-            count += 1
-        prime_counts[i] = count
-
-    return prime_counts
-
 def isWinner(x, nums):
-    """Determines the winner of the Prime Game."""
-    if not nums or x < 1:
+    """
+    Determines the winner of the prime game over x rounds.
+    Maria and Ben take turns removing prime numbers and their multiples.
+    Returns:
+        "Maria" if Maria wins more rounds,
+        "Ben" if Ben wins more rounds,
+        None if the result is a tie.
+    """
+    if x < 1 or not nums:
         return None
 
     max_n = max(nums)
 
-    primes = sieve_of_eratosthenes(max_n)
-    prime_counts = calculate_prime_counts(max_n, primes)
+    # Sieve of Eratosthenes to identify primes up to max_n
+    is_prime = [True for _ in range(max_n + 1)]
+    is_prime[0] = False
+    if max_n >= 1:
+        is_prime[1] = False
+
+    for i in range(2, int(max_n ** 0.5) + 1):
+        if is_prime[i]:
+            for j in range(i * i, max_n + 1, i):
+                is_prime[j] = False
+
+    # Precompute the prefix sums of prime counts
+    prime_count = [0] * (max_n + 1)
+    for i in range(1, max_n + 1):
+        prime_count[i] = prime_count[i - 1] + (1 if is_prime[i] else 0)
 
     maria_wins = 0
     ben_wins = 0
 
+    # Determine the winner for each round
     for n in nums:
-        if prime_counts[n] % 2 == 1:
+        # If count of primes up to n is odd, Maria wins, else Ben wins
+        if prime_count[n] % 2 == 1:
             maria_wins += 1
         else:
             ben_wins += 1
 
+    # Determine the overall winner
     if maria_wins > ben_wins:
         return "Maria"
     elif ben_wins > maria_wins:
         return "Ben"
     else:
         return None
-
-def main():
-    print("Winner: {}".format(isWinner(5, [2, 5, 1, 4, 3])))
-
-if __name__ == "__main__":
-    main()
