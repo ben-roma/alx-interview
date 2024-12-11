@@ -35,7 +35,7 @@ def isWinner(x, nums):
 
     # Determine the winner for each round
     for n in nums:
-        # If count of primes up to n is odd, Maria wins, else Ben wins
+        # If count of primes u to n is odd, Maria wins, else Ben wins
         if prime_count[n] % 2 == 1:
             maria_wins += 1
         else:
