@@ -31,7 +31,6 @@ def isWinner(x, nums):
 
     max_n = max(nums)
 
-    # Generate primes and precompute counts of primes
     primes = sieve_of_eratosthenes(max_n)
     prime_counts = calculate_prime_counts(max_n, primes)
 
@@ -51,7 +50,6 @@ def isWinner(x, nums):
     else:
         return None
 
-# Example usage
 def main():
     print("Winner: {}".format(isWinner(5, [2, 5, 1, 4, 3])))
 
